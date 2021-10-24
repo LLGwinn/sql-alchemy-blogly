@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+  <div class="container">
+
+    <div class="row">
+      <div class="col-2">
+        <img src="{{user.image_url}}" width='100px' class="img-thumbnail" alt="user photo">
+      </div>
+      <div class="col-4">
+        <h1>{{user.first_name}} {{user.last_name}}</h1>
+
+        <!-- Use form for buttons to allow for post route on delete -->
+        <form method='POST' action='/users/{{user.id}}/delete'>
+            <a class="btn btn-primary btn-sm" href="/users/{{user.id}}/edit" role="button">Edit</a>
+            <button class="btn btn-danger btn-sm" type="submit">Delete</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
