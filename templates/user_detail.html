@@ -1,24 +1,92 @@
 {% extends 'base.html' %}
 
+{% block title %}{{user.full_name}}{% endblock %}
 
 {% block content %}
 
-  <div class="container">
+<div class='container-fluid mt-2'>
+    <div class='row'>
+        <!-- User photo -->
+        {% if user.image_url %}
+        <div class="col-sm-2 col-6">
+            <img src="{{ user.image_url }}" alt="user photo" class="img-fluid">
+        </div>
+        {% endif %}
 
-    <div class="row">
-      <div class="col-2">
-        <img src="{{user.image_url}}" width='100px' class="img-thumbnail" alt="user photo">
-      </div>
-      <div class="col-4">
-        <h1>{{user.first_name}} {{user.last_name}}</h1>
-
-        <!-- Use form for buttons to allow for post route on delete -->
-        <form method='POST' action='/users/{{user.id}}/delete'>
-            <a class="btn btn-primary btn-sm" href="/users/{{user.id}}/edit" role="button">Edit</a>
-            <button class="btn btn-danger btn-sm" type="submit">Delete</button>
-        </form>
-      </div>
+        <!-- User details -->
+        <div class="col-sm-10 col-12">
+            <!-- User full name -->
+            <h1>{{user.full_name}}</h1>
+            <!-- Buttons to edit/delete user -->
+            <div class="col-sm-10 col-12">
+                <form>
+                    <button class="btn btn-primary btn-sm" formaction="/users/{{ user.id }}/edit" formmethod="GET">
+                        Edit
+                    </button>
+                    <button class="btn btn-danger btn-sm" formaction="/users/{{ user.id }}/delete" formmethod="POST">
+                        Delete
+                    </button>
+                </form>
+            </div>
+            <!-- Posts information -->
+            <div class='col-sm-10 col-12 mt-3'>
+                <h2>Posts</h2>
+            </div>
+            <div class='col-sm-10 col-12'>
+                <!-- List of user's posts -->
+                <ul>
+                    {% for post in posts %}
+                    <li><a href='/posts/{{post.id}}'>{{post.title}}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class='col-sm-10 col-12'>
+                <a class="btn btn-primary" href="/users/{{user.id}}/posts/new">Add Post</a>
+                <a class="btn btn-outline-primary" href="/users">Back to User List</a>
+            </div>
+        </div>
+        
     </div>
-  </div>
+   
+</div>
+
+  <!-- <div class="row">
+
+      < User photo -->
+      <!-- {% if user.image_url %}
+      <div class="col-sm-2 col-6">
+          <img src="{{ user.image_url }}" alt="user photo" class="img-fluid">
+      </div>
+      {% endif %} -->
+
+      <!-- Name, edit/delete buttons -->
+      <!-- <div class="col-sm-10 col-12">
+          <h1>{{user.full_name}}</h1>
+
+          <-- Use form for buttons to allow for post route on delete
+           <form>
+              <button class="btn btn-primary btn-sm" formaction="/users/{{ user.id }}/edit" formmethod="GET">
+                  Edit
+              </button>
+              <button class="btn btn-danger btn-sm" formaction="/users/{{ user.id }}/delete" formmethod="POST">
+                  Delete
+              </button>
+          </form>
+      </div> --> 
+
+      <!-- Posts list -->
+      <!-- <div class='col-sm-10 col-12'>
+          <h2>Posts</h2>
+
+          <ul>
+              {% for post in posts %}
+              <li><a href='/posts/{{post.id}}'>{{post.title}}</li>
+              {% endfor %}
+          </ul>
+          <a class="btn btn-primary" href="/users/{{user.id}}/posts/new">Add Post</a>
+
+      </div>
+
+  </div> --> 
 
 {% endblock %}
