@@ -1,5 +1,7 @@
+from enum import unique
 from flask_sqlalchemy import SQLAlchemy
 import datetime
+
 
 db = SQLAlchemy()
 
@@ -21,7 +23,7 @@ class User(db.Model):
     
     def __repr__(self):
         u = self
-        return f'<User id:{u.id} Name:{u.first_name} {u.last_name}>'
+        return f'<User id:{u.id} Name:{u.full_name}>'
 
     @property
     def full_name(self):
@@ -40,12 +42,41 @@ class Post(db.Model):
     created_at = db.Column(db.DateTime(timezone=True), nullable=False, default=datetime.datetime.now)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete='CASCADE'), nullable=False)
 
+    tags = db.relationship('Tag', secondary='post_tags', backref='posts')
+    post_tags = db.relationship('PostTag', backref='post')
+
+    def __repr__(self):
+        p = self
+        return f'<Post id:{p.id} Title:{p.title}>'
 
     @property
     def format_date(self):
         """ Return date in user-friendly format """
 
         return (self.created_at.strftime("%a %b %d %Y, %I:%M %p"))
+
+class Tag(db.Model):
+
+    __tablename__ = 'tags'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.Text, unique=True, nullable=False)
+
+    def __repr__(self):
+        t = self
+        return f'<Tag id:{t.id} Name:{t.name}>'
+
+
+class PostTag(db.Model):
+
+    __tablename__ = 'post_tags'
+
+    post_id = db.Column(db.Integer, db.ForeignKey('posts.id'), primary_key=True)
+    tag_id = db.Column(db.Integer, db.ForeignKey('tags.id'), primary_key=True)
+
+    def __repr__(self):
+        pt = self
+        return f'<post_id:{pt.post_id} tag_id:{pt.tag_id}>'
 
 
 

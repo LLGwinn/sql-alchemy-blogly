@@ -1,6 +1,6 @@
 """ Seed data for blogly db """
 
-from models import User, Post, db 
+from models import User, Post, Tag, db 
 from app import app
 
 # Create table
@@ -26,4 +26,14 @@ post3 = Post(title='Flask is Awesome!', content='Just need more practice.', user
 
 # Add posts to db
 db.session.add_all([post1, post2, post3])
+db.session.commit()
+
+# Create tags
+tag1 = Tag(name='funny')
+tag2 = Tag(name='boring')
+tag3 = Tag(name='whatever')
+
+
+# Add tags to db
+db.session.add_all([tag1, tag2, tag3])
 db.session.commit()

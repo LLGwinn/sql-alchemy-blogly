@@ -13,8 +13,13 @@
             {{post.content}}
         </div>
         <div class='col-6 fst-italic mt-3'>
-            <p>By {{post.full_name}}</p>
-            <p>Posted: {{post_date}}</p>        
+            By {{post.users.full_name}} on {{post_date}}      
+        </div>
+        <div class='fw-bold'>
+            Tags:
+            {% for tag in tags %}
+            <div class='badge bg-primary'>{{tag.name}}</div>
+            {% endfor %}
         </div>
         
         <form class='mt-3'>

@@ -15,6 +15,18 @@
         <label for="content" class="form-label">Content</label>
         <textarea class="form-control" id="content" name="content" rows='2'>{{post.content}}</textarea>
     </div>
+    <div class='col-6 mt-3'>
+        {% for tag in tags %}
+        <div class="form-check form-check-inline">
+            {% if tag in post_tags %}
+            <input class="form-check-input" type="checkbox" id="name" value="{{tag.name}}" name="name" checked>
+            {% else %}
+            <input class="form-check-input" type="checkbox" id="name" value="{{tag.name}}" name="name">
+            {% endif %}
+            <label class="form-check-label" for="name">{{tag.name}}</label>
+        </div>
+        {% endfor %}  
+    </div>
     <div class="mt-3">
         <a class="btn btn-outline-success" href="/users/{{post.user_id}}">Cancel</a>
         <button class="btn btn-success" type="submit">Edit</button> 

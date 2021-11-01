@@ -8,10 +8,11 @@
 
 <ul>
     {% for user in users %}
-    <li><a href='/users/{{user.id}}'>{{user.full_name}}</li>  
+    <li><a class='text-decoration-none' href='/users/{{user.id}}'>{{user.full_name}}</li>  
     {% endfor %}
 </ul>
 
 <a class="btn btn-secondary btn-sm" href="/users/new" role="button">Add user</a>
+<a class="btn btn-outline-info btn-sm" href="/" role="button">Home</a>
 
 {% endblock %}

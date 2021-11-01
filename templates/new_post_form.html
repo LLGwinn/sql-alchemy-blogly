@@ -7,13 +7,21 @@
 {% block content %}
 
 <form method='POST'>
-    <div class="col-4">
+    <div class='col-4'>
         <label for="title" class="form-label">Title</label>
         <input type="text" class="form-control" id="title" name="title">
     </div>
-    <div class="col-4">
-        <label for="content" class="form-label">Content</label>
+    <div class='col-4'>
+        <label for="content" class="form-label">Post Content</label>
         <textarea class="form-control" id="content" name="content" rows='2'></textarea>
+    </div>
+    <div class='col-6 mt-3'>
+        {% for tag in tag_options %}
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="name" value="{{tag.name}}" name="name">
+            <label class="form-check-label" for="name">{{tag.name}}</label>
+        </div>
+        {% endfor %}  
     </div>
     <div class='mt-3 col-4'>
         <a class="btn btn-info" href="/users/{{user.id}}" mt-3>Cancel</a>
